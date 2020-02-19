@@ -1,5 +1,8 @@
 package br.projeto.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import aima.core.search.csp.Variable;
 
 public class Disciplina extends Variable {
@@ -8,23 +11,13 @@ public class Disciplina extends Variable {
 		super(name);
 		this.codigo = codigo;
 		this.cargaHoraria = carga;
-		number = carga / 30;
+		this.horario = new ArrayList<>();
 	}
 
-//	private String nome;
 	private String codigo;
 	private Docente docente;
 	private int cargaHoraria;
-	private int number;
-	private String horario;
-
-//	public String getNome() {
-//		return nome;
-//	}
-//
-//	public void setNome(String nome) {
-//		this.nome = nome;
-//	}
+	private List<Horario> horario;
 
 	public Docente getDocente() {
 		return docente;
@@ -42,29 +35,6 @@ public class Disciplina extends Variable {
 		this.cargaHoraria = cargaHoraria;
 	}
 
-	public String getHorario() {
-		return horario;
-	}
-
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	public Boolean numberAlt() {
-		if (this.number > 0) {
-			this.number--;
-			return true;
-		}
-		return false;
-	}
 
 	public String getCodigo() {
 		return codigo;
@@ -76,7 +46,20 @@ public class Disciplina extends Variable {
 
 	@Override
 	public String toString() {
-		return "("+this.getName()+"="+"Docente:"+docente+")";
+		return "("+this.getName()+"="+"Docente:"+docente+"=="+"Horario"+this.horario+")";
+	}
+
+	public List<Horario> getHorario() {
+		return horario;
+	}
+
+	public void setHorario(List<Horario> horario) {
+		this.horario = horario;
+	}
+	
+	public void addHorario(Horario horario) {
+		if(this.horario.size() < cargaHoraria/15)
+			this.horario.add(horario);
 	}
 	
 	

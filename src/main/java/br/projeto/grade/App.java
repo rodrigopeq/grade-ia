@@ -10,11 +10,11 @@ import aima.core.search.csp.CspListener;
 import aima.core.search.csp.CspSolver;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.MinConflictsSolver;
-import aima.core.search.csp.Variable;
-import br.projeto.csp.horario.HorarioCSP2;
+import br.projeto.csp.horario.HorarioCSP;
 import br.projeto.csp.professores.DisciplinaCSP;
 import br.projeto.models.Disciplina;
 import br.projeto.models.Docente;
+import br.projeto.models.Horario;
 
 public class App
 
@@ -29,40 +29,40 @@ public class App
 	public static final Disciplina ELET0111 = new Disciplina("ELET0111", "ELETRÔNICA I", 90);
 
 	// SEGUNDA
-	public static final Variable SEG1 = new Variable("2T1");
-	public static final Variable SEG2 = new Variable("2T2");
-	public static final Variable SEG3 = new Variable("2T3");
-	public static final Variable SEG4 = new Variable("2T4");
-	public static final Variable SEG5 = new Variable("2T5");
-	public static final Variable SEG6 = new Variable("2T6");
+	public static final Horario SEG1 = new Horario("2T1");
+	public static final Horario SEG2 = new Horario("2T2");
+	public static final Horario SEG3 = new Horario("2T3");
+	public static final Horario SEG4 = new Horario("2T4");
+	public static final Horario SEG5 = new Horario("2T5");
+	public static final Horario SEG6 = new Horario("2T6");
 	// TERÇA
-	public static final Variable TER1 = new Variable("3T1");
-	public static final Variable TER2 = new Variable("3T2");
-	public static final Variable TER3 = new Variable("3T3");
-	public static final Variable TER4 = new Variable("3T4");
-	public static final Variable TER5 = new Variable("3T5");
-	public static final Variable TER6 = new Variable("3T6");
+	public static final Horario TER1 = new Horario("3T1");
+	public static final Horario TER2 = new Horario("3T2");
+	public static final Horario TER3 = new Horario("3T3");
+	public static final Horario TER4 = new Horario("3T4");
+	public static final Horario TER5 = new Horario("3T5");
+	public static final Horario TER6 = new Horario("3T6");
 	// QUARTA
-	public static final Variable QUA1 = new Variable("4T1");
-	public static final Variable QUA2 = new Variable("4T2");
-	public static final Variable QUA3 = new Variable("4T3");
-	public static final Variable QUA4 = new Variable("4T4");
-	public static final Variable QUA5 = new Variable("4T5");
-	public static final Variable QUA6 = new Variable("4T6");
+	public static final Horario QUA1 = new Horario("4T1");
+	public static final Horario QUA2 = new Horario("4T2");
+	public static final Horario QUA3 = new Horario("4T3");
+	public static final Horario QUA4 = new Horario("4T4");
+	public static final Horario QUA5 = new Horario("4T5");
+	public static final Horario QUA6 = new Horario("4T6");
 	// QUINTA
-	public static final Variable QUI1 = new Variable("5T1");
-	public static final Variable QUI2 = new Variable("5T2");
-	public static final Variable QUI3 = new Variable("5T3");
-	public static final Variable QUI4 = new Variable("5T4");
-	public static final Variable QUI5 = new Variable("5T5");
-	public static final Variable QUI6 = new Variable("5T6");
+	public static final Horario QUI1 = new Horario("5T1");
+	public static final Horario QUI2 = new Horario("5T2");
+	public static final Horario QUI3 = new Horario("5T3");
+	public static final Horario QUI4 = new Horario("5T4");
+	public static final Horario QUI5 = new Horario("5T5");
+	public static final Horario QUI6 = new Horario("5T6");
 	// SEXTA
-	public static final Variable SEX1 = new Variable("6T1");
-	public static final Variable SEX2 = new Variable("6T2");
-	public static final Variable SEX3 = new Variable("6T3");
-	public static final Variable SEX4 = new Variable("6T4");
-	public static final Variable SEX5 = new Variable("6T5");
-	public static final Variable SEX6 = new Variable("6T6");
+	public static final Horario SEX1 = new Horario("6T1");
+	public static final Horario SEX2 = new Horario("6T2");
+	public static final Horario SEX3 = new Horario("6T3");
+	public static final Horario SEX4 = new Horario("6T4");
+	public static final Horario SEX5 = new Horario("6T5");
+	public static final Horario SEX6 = new Horario("6T6");
 
 	public static final Docente PROF1 = new Docente("ADICINEIA");
 	public static final Docente PROF2 = new Docente("ADIMILSON");
@@ -103,8 +103,8 @@ public class App
 		solverDisciplina.addCspListener(stepCounterDisciplina);
 		stepCounterDisciplina.reset();
 		solutionDisciplina = solverDisciplina.solve(cspDisciplina);
-//	solutionDisciplina.ifPresent(System.out::println);
-//	System.out.println(stepCounterDisciplina.getResults() + "\n");
+//		solutionDisciplina.ifPresent(System.out::println);
+//		System.out.println(stepCounterDisciplina.getResults() + "\n");
 
 		for (Disciplina di : list) {
 			di.setDocente(solutionDisciplina.get().getValue(di));
@@ -114,13 +114,13 @@ public class App
 
 		Domain<Disciplina> horarios = new Domain<>(COMP0397, COMP0427, COMP0439, COMP0455, COMP0463, COMP0470,
 				ELET0111);
-		List<Variable> variaveisHorario = Arrays.asList(SEG1, SEG2, SEG3, SEG4, SEG5, SEG6, TER1, TER2, TER3, TER4,
-				TER5, TER6, QUA1, QUA2, QUA3, QUA4, QUA5, QUA6, QUI1, QUI2, QUI3, QUI4, QUI5, QUI6, SEX1, SEX2, SEX3,
-				SEX4, SEX5, SEX6);
-		CSP<Variable, Disciplina> cspHorario = new HorarioCSP2(variaveisHorario, horarios);
-		CspListener.StepCounter<Variable, Disciplina> stepCounterHorario = new CspListener.StepCounter<>();
-		CspSolver<Variable, Disciplina> solverHorario;
-		Optional<Assignment<Variable, Disciplina>> solutionHorario;
+		List<Horario> variaveisHorario = Arrays.asList(SEG1, SEG2, SEG3, SEG4, SEG5, SEG6, TER1, TER2, TER3, TER4, TER5,
+				TER6, QUA1, QUA2, QUA3, QUA4, QUA5, QUA6, QUI1, QUI2, QUI3, QUI4, QUI5, QUI6, SEX1, SEX2, SEX3, SEX4,
+				SEX5, SEX6);
+		CSP<Horario, Disciplina> cspHorario = new HorarioCSP(variaveisHorario, horarios);
+		CspListener.StepCounter<Horario, Disciplina> stepCounterHorario = new CspListener.StepCounter<>();
+		CspSolver<Horario, Disciplina> solverHorario;
+		Optional<Assignment<Horario, Disciplina>> solutionHorario;
 
 		solverHorario = new MinConflictsSolver<>(1000);
 		do {
@@ -128,8 +128,19 @@ public class App
 			stepCounterHorario.reset();
 			solutionHorario = solverHorario.solve(cspHorario);
 		} while (Integer.parseInt(stepCounterHorario.getResults().get("assignmentCount")) > 1000);
-		solutionHorario.ifPresent(System.out::println);
+//		solutionHorario.ifPresent(System.out::println);
 		System.out.println(stepCounterHorario.getResults() + "\n");
+
+		var solution = solutionHorario.get();
+
+		for (Horario ho : solution.getVariables()) {
+			var di = solution.getValue(ho);
+			di.addHorario(ho);
+		}
+
+		for (Disciplina di : list) {
+			System.out.println(di);
+		}
 
 	}
 

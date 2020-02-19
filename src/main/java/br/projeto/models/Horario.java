@@ -1,12 +1,12 @@
-package br.projeto.csp.horario;
+package br.projeto.models;
 
 import aima.core.search.csp.Variable;
 import br.projeto.models.Disciplina;
 
-public class Horario extends Variable{
-	
+public class Horario extends Variable {
+
 	private Disciplina disciplina;
-	
+
 	public Horario(String name) {
 		super(name);
 	}
