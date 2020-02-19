@@ -1,100 +1,69 @@
 package br.projeto.csp.horario;
 
-import java.util.Arrays;
+import java.util.List;
 
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
+import br.projeto.models.Disciplina;
 
-public class HorarioCSP2 extends CSP<Variable,String>{
-	
-	public static final String COMP0397 = "PROGRAMAÇÃO PARALELA E CONCORRENTE";
-	public static final String COMP0427 = "INTELIGÊNCIA ARTIFICIAL";
-	public static final String COMP0439 = "ENGENHARIA DE SOFTWARE II";
-	public static final String COMP0455 = "BANCO DE DADOS I";
-	public static final String COMP0463 = "LABORATÓRIO DE REDES DE COMPUTADORES";
-	public static final String COMP0470 = "SISTEMAS DISTRIBUÍDOS";
-	public static final String ELET0111 = "ELETRÔNICA I";
-	
-	//SEGUNDA
-	public static final Variable SEG1 = new Variable("2T1");
-	public static final Variable SEG2 = new Variable("2T2");
-	public static final Variable SEG3 = new Variable("2T3");
-	public static final Variable SEG4 = new Variable("2T4");
-	public static final Variable SEG5 = new Variable("2T5");
-	public static final Variable SEG6 = new Variable("2T6");
-	//TERÇA
-	public static final Variable TER1 = new Variable("3T1");
-	public static final Variable TER2 = new Variable("3T2");
-	public static final Variable TER3 = new Variable("3T3");
-	public static final Variable TER4 = new Variable("3T4");
-	public static final Variable TER5 = new Variable("3T5");
-	public static final Variable TER6 = new Variable("3T6");
-	//QUARTA
-	public static final Variable QUA1 = new Variable("4T1");
-	public static final Variable QUA2 = new Variable("4T2");
-	public static final Variable QUA3 = new Variable("4T3");
-	public static final Variable QUA4 = new Variable("4T4");
-	public static final Variable QUA5 = new Variable("4T5");
-	public static final Variable QUA6 = new Variable("4T6");
-	//QUINTA
-	public static final Variable QUI1 = new Variable("5T1");
-	public static final Variable QUI2 = new Variable("5T2");
-	public static final Variable QUI3 = new Variable("5T3");
-	public static final Variable QUI4 = new Variable("5T4");
-	public static final Variable QUI5 = new Variable("5T5");
-	public static final Variable QUI6 = new Variable("5T6");
-	//SEXTA
-	public static final Variable SEX1 = new Variable("6T1");
-	public static final Variable SEX2 = new Variable("6T2");
-	public static final Variable SEX3 = new Variable("6T3");
-	public static final Variable SEX4 = new Variable("6T4");
-	public static final Variable SEX5 = new Variable("6T5");
-	public static final Variable SEX6 = new Variable("6T6");
-	
-	public HorarioCSP2() {
-		
-		super(Arrays.asList(SEG1,SEG2,SEG3,SEG4,SEG5,SEG6,
-				TER1,TER2,TER3,TER4,TER5,TER6,
-				QUA1,QUA2,QUA3,QUA4,QUA5,QUA6,
-				QUI1,QUI2,QUI3,QUI4,QUI5,QUI6,
-				SEX1,SEX2,SEX3,SEX4,SEX5,SEX6
-));
-		
-		Domain<String> horarios = new Domain<>(COMP0397,COMP0427,COMP0439,COMP0455,COMP0463,COMP0470,ELET0111);
-		
+public class HorarioCSP2 extends CSP<Variable, Disciplina> {
+
+	public HorarioCSP2(List<Variable> list,Domain<Disciplina> horarios) {
+
+		super(list);
+
 		for (Variable var : getVariables())
 			setDomain(var, horarios);
 		
+		for (int i =0;i<list.size();i=i+2) {
+			addConstraint(new EqualConstraint<>(list.get(i), list.get(i+1)));
+		}
+		
+		// 246T12
+		addConstraint(new EqualConstraint<>(list.get(0), list.get(12)));
+		addConstraint(new EqualConstraint<>(list.get(24), list.get(12)));
+
+		addConstraint(new AnotherDepartConstraint<>(list.get(0), horarios.get(6)));
+		
+//		for( int i = 0;i < list.size();i++) {
+//			addConstraint(new WorkloadConstraint<>(list.get(i)));	
+//		}
+		addConstraint(new WorkloadConstraint<>(list.get(2)));
+		addConstraint(new WorkloadConstraint<>(list.get(4)));
+		addConstraint(new WorkloadConstraint<>(list.get(6)));
+		addConstraint(new WorkloadConstraint<>(list.get(8)));
+		addConstraint(new WorkloadConstraint<>(list.get(10)));
+		addConstraint(new WorkloadConstraint<>(list.get(14)));
+		addConstraint(new WorkloadConstraint<>(list.get(16)));
+		addConstraint(new WorkloadConstraint<>(list.get(18)));
+		addConstraint(new WorkloadConstraint<>(list.get(20)));
+		addConstraint(new WorkloadConstraint<>(list.get(22)));
+		addConstraint(new WorkloadConstraint<>(list.get(26)));
+		addConstraint(new WorkloadConstraint<>(list.get(28)));
 		
 		
-		//SEGUNDA
-		addConstraint(new EqualConstraint<>(SEG1,SEG2));
-		addConstraint(new EqualConstraint<>(SEG3,SEG4));
-		addConstraint(new EqualConstraint<>(SEG5,SEG6));
-		//TERÇA
-		addConstraint(new EqualConstraint<>(TER1,TER2));
-		addConstraint(new EqualConstraint<>(TER3,TER4));
-		addConstraint(new EqualConstraint<>(TER5,TER6)); 
-		//QUARTA
-		addConstraint(new EqualConstraint<>(QUA1,QUA2));
-		addConstraint(new EqualConstraint<>(QUA3,QUA4));
-		addConstraint(new EqualConstraint<>(QUA5,QUA6));
-		//QUINTA
-		addConstraint(new EqualConstraint<>(QUI1,QUI2));
-		addConstraint(new EqualConstraint<>(QUI3,QUI4));
-		addConstraint(new EqualConstraint<>(QUI5,QUI6));
-		//SEXTA
-		addConstraint(new EqualConstraint<>(SEX1,SEX2));
-		addConstraint(new EqualConstraint<>(SEX3,SEX4));
-		addConstraint(new EqualConstraint<>(SEX5,SEX6));
-		
-		//246T12
-		addConstraint(new EqualConstraint<>(SEG1,QUA1));
-		addConstraint(new EqualConstraint<>(SEX1,QUA1));
-	
+//		// SEGUNDA
+//		addConstraint(new EqualConstraint<>(SEG1, SEG2));
+//		addConstraint(new EqualConstraint<>(SEG3, SEG4));
+//		addConstraint(new EqualConstraint<>(SEG5, SEG6));
+//		// TERÇA
+//		addConstraint(new EqualConstraint<>(TER1, TER2));
+//		addConstraint(new EqualConstraint<>(TER3, TER4));
+//		addConstraint(new EqualConstraint<>(TER5, TER6));
+//		// QUARTA
+//		addConstraint(new EqualConstraint<>(QUA1, QUA2));
+//		addConstraint(new EqualConstraint<>(QUA3, QUA4));
+//		addConstraint(new EqualConstraint<>(QUA5, QUA6));
+//		// QUINTA
+//		addConstraint(new EqualConstraint<>(QUI1, QUI2));
+//		addConstraint(new EqualConstraint<>(QUI3, QUI4));
+//		addConstraint(new EqualConstraint<>(QUI5, QUI6));
+//		// SEXTA
+//		addConstraint(new EqualConstraint<>(SEX1, SEX2));
+//		addConstraint(new EqualConstraint<>(SEX3, SEX4));
+//		addConstraint(new EqualConstraint<>(SEX5, SEX6));
+
 	}
-		
-	
-	
+
 }

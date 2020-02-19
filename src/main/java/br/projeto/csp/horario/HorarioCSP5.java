@@ -79,21 +79,21 @@ public class HorarioCSP5 extends CSP<Variable,Disciplina>{
 		//ELETRÔNICA - 246T12
 		addConstraint(new AnotherDepartConstraint<>(SEG1,ELET0111));
 		
-		addConstraint(new WorkloadConstraint<>(SEG1));
-		addConstraint(new WorkloadConstraint<>(SEG2));
-		addConstraint(new WorkloadConstraint<>(SEG3));
-		addConstraint(new WorkloadConstraint<>(TER1));
-		addConstraint(new WorkloadConstraint<>(TER2));
-		addConstraint(new WorkloadConstraint<>(TER3));
-		addConstraint(new WorkloadConstraint<>(QUA1));
-		addConstraint(new WorkloadConstraint<>(QUA2));
-		addConstraint(new WorkloadConstraint<>(QUA3));
-		addConstraint(new WorkloadConstraint<>(QUI1));
-		addConstraint(new WorkloadConstraint<>(QUI2));
-		addConstraint(new WorkloadConstraint<>(QUI3));
-		addConstraint(new WorkloadConstraint<>(SEX1));
-		addConstraint(new WorkloadConstraint<>(SEX2));
-		addConstraint(new WorkloadConstraint<>(SEX3));
+		addConstraint(new TesteC<>(SEG1));
+		addConstraint(new TesteC<>(SEG2));
+		addConstraint(new TesteC<>(SEG3));
+		addConstraint(new TesteC<>(TER1));
+		addConstraint(new TesteC<>(TER2));
+		addConstraint(new TesteC<>(TER3));
+		addConstraint(new TesteC<>(QUA1));
+		addConstraint(new TesteC<>(QUA2));
+		addConstraint(new TesteC<>(QUA3));
+		addConstraint(new TesteC<>(QUI1));
+		addConstraint(new TesteC<>(QUI2));
+		addConstraint(new TesteC<>(QUI3));
+		addConstraint(new TesteC<>(SEX1));
+		addConstraint(new TesteC<>(SEX2));
+		addConstraint(new TesteC<>(SEX3));
 		
 		
 		

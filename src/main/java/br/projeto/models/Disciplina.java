@@ -74,4 +74,11 @@ public class Disciplina extends Variable {
 		this.codigo = codigo;
 	}
 
+	@Override
+	public String toString() {
+		return "("+this.getName()+"="+"Docente:"+docente+")";
+	}
+	
+	
+
 }

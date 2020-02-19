@@ -19,7 +19,6 @@ public class AnotherDepartConstraint<VAR extends Variable, VAL> implements Const
 		this.var2 = var2;
 		scope = new ArrayList<>(2);
 		scope.add(var1);
-//		scope.add(var2);
 	}
 
 	@Override
@@ -30,9 +29,7 @@ public class AnotherDepartConstraint<VAR extends Variable, VAL> implements Const
 	@Override
 	public boolean isSatisfiedWith(Assignment<VAR, VAL> assignment) {
 		VAL value1 = assignment.getValue(var1);
-//		return ((Disciplina) value1).numberAlt();
 		return value1 == null || value1.equals(var2);
-//		return true;
 	}
 }
 
