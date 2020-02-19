@@ -15,29 +15,18 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import br.projeto.models.Disciplina;
+import br.projeto.models.Docente;
 
 public class MainApi {
 
 	public static void main(String[] args) {
 		APIConnect api = new APIConnect();
-		var urlParametersDisc = "{\"query\":\"{ disciplinas { codigo horario name carga_horaria } }\"}";
-		var urlParametersDoc = "{\"query\":\"{ disciplinas { codigo horario name carga_horaria } }\"}";
-		var urlParameterTudo = "{\"query\":\"{ disciplinas { codigo horario name carga_horaria } }\"}";
-		api.request(urlParametersDoc);
-
-		String response = responseFormated(api.getLastContent().toString());
-		System.out.println(response);
-		Type listType = new TypeToken<ArrayList<Disciplina>>() {
-		}.getType();
-		List<Disciplina> yourClassList = new Gson().fromJson(response, listType);
-		System.out.println(yourClassList);
-	}
-
-	public static String responseFormated(String response) {
-		int inicial = response.indexOf("[");
-		int finale = response.indexOf("]") + 1;
-		String sub = response.substring(inicial, finale);
-		return sub;
+		APIRequest request = new APIRequest(api);
+		List<Disciplina> disciplinas = request.requestDisciplina();
+//		List<Docente> docentes = request.requestDocente(); // Falta implementar o codigo
+		
+		System.out.println(disciplinas);
+//		System.out.println(docentes);
 	}
 
 }
