@@ -46,7 +46,17 @@ public class Disciplina extends Variable {
 
 	@Override
 	public String toString() {
-		return "("+this.getName()+"="+"Docente:"+docente+"=="+"Horario"+this.horario+")";
+		StringBuilder result = new StringBuilder();
+		result.append("(");
+		result.append(this.getName());
+		if(docente!= null) {
+			result.append("==Docente:");
+			result.append(docente.toString());
+		}
+		result.append("==Horario");
+		result.append(this.horario);
+		result.append(")");	
+		return result.toString();
 	}
 
 	public List<Horario> getHorario() {

@@ -36,8 +36,6 @@ public class WorkloadConstraint<VAR extends Variable, VAL> implements Constraint
 				value = (Disciplina) assignment.getValue(di);
 				if(value.getCodigo().equals(value1.getCodigo())) {
 					count++;
-//					System.out.println(count);
-//					System.out.println(value + "=====" +value1);
 				}
 			}
 			if(count <= value.getCargaHoraria()/15)

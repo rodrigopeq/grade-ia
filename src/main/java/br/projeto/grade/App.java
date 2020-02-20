@@ -128,7 +128,7 @@ public class App
 			stepCounterHorario.reset();
 			solutionHorario = solverHorario.solve(cspHorario);
 		} while (Integer.parseInt(stepCounterHorario.getResults().get("assignmentCount")) > 1000);
-//		solutionHorario.ifPresent(System.out::println);
+		solutionHorario.ifPresent(System.out::println);
 		System.out.println(stepCounterHorario.getResults() + "\n");
 
 		var solution = solutionHorario.get();
