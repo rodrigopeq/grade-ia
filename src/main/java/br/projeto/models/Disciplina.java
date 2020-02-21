@@ -47,17 +47,17 @@ public class Disciplina extends Variable {
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		result.append("(");
+//		result.append("(");
 		result.append(this.getName());
 //		if(docente!= null) {
 //			result.append("==Docente:");
 //			result.append(docente.toString());
 //		}
-		result.append("==Horario:");
-		result.append(this.horario);
-		result.append("==Carga:");
-		result.append(this.cargaHoraria);
-		result.append(")");	
+//		result.append("==Horario:");
+//		result.append(this.horario);
+//		result.append("==Carga:");
+//		result.append(this.cargaHoraria);
+//		result.append(")");	
 		return result.toString();
 	}
 

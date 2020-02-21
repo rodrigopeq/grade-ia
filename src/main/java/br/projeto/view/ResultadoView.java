@@ -1,24 +1,30 @@
 package br.projeto.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
+import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import br.projeto.grade.Controller;
 import br.projeto.grade.DesenhaGrade;
+import br.projeto.models.Disciplina;
+import br.projeto.models.Docente;
+
+import javax.swing.JScrollPane;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JComponent;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTable;
 
 public class ResultadoView extends JFrame {
 
@@ -27,7 +33,10 @@ public class ResultadoView extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JPanel panel;
 	private JTable table;
+	private JPanel panel_1;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -50,24 +59,32 @@ public class ResultadoView extends JFrame {
 	 */
 	public ResultadoView() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 700);
-		setExtendedState(MAXIMIZED_BOTH);
+		setBounds(100, 100, 450, 300);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
-
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(5, 5, 900, 660);
-		contentPane.add(scrollPane);
-
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+		);
+		
+		panel = new JPanel();
+		scrollPane.setColumnHeaderView(panel);
+		
 		Controller app = new Controller();
 		try {
 			app.resultProblem();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Não foi encontrado nenhum resultado possivel", "Alerta",
 					JOptionPane.ERROR_MESSAGE);
-			this.dispose();
 			e.printStackTrace();
 		}
 		DesenhaGrade grade = new DesenhaGrade(app.getDisciplinas());
@@ -91,7 +108,7 @@ public class ResultadoView extends JFrame {
 
 				JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
 				component.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-
+				
 				return component;
 			}
 		};
@@ -100,14 +117,73 @@ public class ResultadoView extends JFrame {
 		table.setIntercellSpacing(new Dimension(0, 0));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		resizeColumnWidth(table);
-		scrollPane.setViewportView(table);
+		panel.add(table);
+		
+		panel_1 = new JPanel();
+		scrollPane.setViewportView(panel_1);
+		
+		
+		List<Docente> docentes = app.getxDocentes();
+		Object[][] dado = new Object[docentes.size()][3];
+		for(int i=0;i<docentes.size();i++) {
+			dado[i][0] = docentes.get(i).getNome();
+			dado[i][1] = getCarga(app.getDisciplinas(),docentes.get(i));
+		    dado[i][2] = docentes.get(i).preferencias;
+					
+					
+		}
+//				{ docentes.get(1).getNome(), getCarga(app.getDisciplinas(),docentes.get(1)), docentes.get(1).preferencias},
+//				{ docentes.get(2).getNome(), getCarga(app.getDisciplinas(),docentes.get(2)), docentes.get(2).preferencias},
+//				{ docentes.get(3).getNome(), getCarga(app.getDisciplinas(),docentes.get(3)), docentes.get(3).preferencias},
+//				{ docentes.get(4).getNome(), getCarga(app.getDisciplinas(),docentes.get(4)), docentes.get(4).preferencias},
+//				{ docentes.get(5).getNome(), getCarga(app.getDisciplinas(),docentes.get(5)), docentes.get(5).preferencias},
+//				{ docentes.get(6).getNome(), getCarga(app.getDisciplinas(),docentes.get(6)), docentes.get(6).preferencias},
+//				};
+		
+		table_1 = new JTable(dado, getDocProf()) {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+
+				JComponent component = (JComponent) super.prepareRenderer(renderer, row, column);
+				component.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+
+				return component;
+			}
+		};
+
+		table_1.setShowVerticalLines(true);
+		table_1.setIntercellSpacing(new Dimension(0, 0));
+		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		resizeColumnWidth(table_1);
+		panel_1.add(table_1);
+		contentPane.setLayout(gl_contentPane);
 	}
-
+	
 	public String[] getColuumnName() {
 		String[] columnNames = { "Horarios", "Segunda-Feira", "Terça-Feira", "Quarta-feira", "Quinta-feira",
 				"Sexta-feira" };
 		return columnNames;
+	}
+	
+	public String[] getDocProf() {
+		String[] columnNames = { "Nome", "Carga Horaria", "Preferencias"};
+		return columnNames;
+	}
+	
+	public int getCarga(List<Disciplina> disciplinas, Docente docente) {
+		int cargaTotal = 0;
+		for( var di : disciplinas) {
+			if(di.getDocente().getNome() == docente.getNome()) {
+				cargaTotal += di.getCargaHoraria();
+			}
+		}
+		return cargaTotal;
 	}
 
 	public void resizeColumnWidth(JTable table) {
@@ -124,5 +200,4 @@ public class ResultadoView extends JFrame {
 			columnModel.getColumn(column).setPreferredWidth(width);
 		}
 	}
-
 }
