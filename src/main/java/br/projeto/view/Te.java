@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class Te extends JFrame {
@@ -30,7 +32,7 @@ public class Te extends JFrame {
 	private JTable tableGrade;
 	private JTable tableDocente;
 	Controller app = new Controller();
-	DefaultTableModel x = new DefaultTableModel();
+	TableModelHorario x;
 	/**
 	 * Launch the application.
 	 */
@@ -63,8 +65,7 @@ public class Te extends JFrame {
 
 		JPanel panelButons = new JPanel();
 		
-//		tableGrade.setModel(x);
-		tableGrade = setRowClear();
+		setRowClear();
 		tableGrade.setRowSelectionAllowed(false);
 
 		JPanel description = new JPanel();
@@ -100,7 +101,7 @@ public class Te extends JFrame {
 				try {
 					app.resultProblem();
 					DesenhaGrade grade = new DesenhaGrade(app.getDisciplinas());
-					tableGrade = setGrade(grade);
+					setGrade(grade);
 					x.fireTableRowsUpdated(0, 6);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null,
@@ -113,7 +114,7 @@ public class Te extends JFrame {
 		JButton btnResetar = new JButton("Resetar");
 		btnResetar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tableGrade = setRowClear();
+				setRowClear();
 				x.fireTableRowsUpdated(0, 6);
 			}
 		});
@@ -154,23 +155,25 @@ public class Te extends JFrame {
 		
 	}
 
-	private JTable setGrade(DesenhaGrade grade) {
-		Object[][] data = { { "13:00h-13:50h", grade.SEG1, grade.TER1, grade.QUA1, grade.QUI1, grade.SEX1 },
-				{ "14:00h-14:50h", grade.SEG2, grade.TER2, grade.QUA2, grade.QUI2, grade.SEX2 },
-				{ "15:00h-15:50h", grade.SEG3, grade.TER3, grade.QUA3, grade.QUI3, grade.SEX3 },
-				{ "16:00h-16:50h", grade.SEG4, grade.TER4, grade.QUA4, grade.QUI4, grade.SEX4 },
-				{ "17:00h-17:50h", grade.SEG5, grade.TER5, grade.QUA5, grade.QUI5, grade.SEX5 },
-				{ "18:00h-18:50h", grade.SEG6, grade.TER6, grade.QUA6, grade.QUI6, grade.SEX6 }, };
-		return new JTable(data, getColuumnName());
+	private void setGrade(DesenhaGrade grade) {
+		List<String> data = Arrays.asList("13:00h-13:50h", grade.SEG1, grade.TER1, grade.QUA1, grade.QUI1, grade.SEX1,
+				 "14:00h-14:50h", grade.SEG2, grade.TER2, grade.QUA2, grade.QUI2, grade.SEX2 ,
+				 "15:00h-15:50h", grade.SEG3, grade.TER3, grade.QUA3, grade.QUI3, grade.SEX3 ,
+				 "16:00h-16:50h", grade.SEG4, grade.TER4, grade.QUA4, grade.QUI4, grade.SEX4 ,
+				 "17:00h-17:50h", grade.SEG5, grade.TER5, grade.QUA5, grade.QUI5, grade.SEX5 ,
+				 "18:00h-18:50h", grade.SEG6, grade.TER6, grade.QUA6, grade.QUI6, grade.SEX6 );
+		TableModelHorario x = new TableModelHorario(data);
+		tableGrade.setModel(x);
 
 	}
 
-	public JTable setRowClear() {
-		Object[][] data = { { "13:00h-13:50h", " ", " ", " ", " ", " " }, { "14:00h-14:50h", " ", " ", " ", " ", " " },
-				{ "15:00h-15:50h", " ", " ", " ", " ", " " }, { "16:00h-16:50h", " ", " ", " ", " ", " " },
-				{ "17:00h-17:50h", " ", " ", " ", " ", " " }, { "18:00h-18:50h", " ", " ", " ", " ", " " }, };
+	public void setRowClear() {
 
-		return new JTable(data, getColuumnName());
+		List<String> data = Arrays.asList("13:00h-13:50h", " ", " ", " ", " ", " " , "14:00h-14:50h", " ", " ", " ", " ", " " ,
+				 "15:00h-15:50h", " ", " ", " ", " ", " " ,  "16:00h-16:50h", " ", " ", " ", " ", " " ,
+				 "17:00h-17:50h", " ", " ", " ", " ", " " ,  "18:00h-18:50h", " ", " ", " ", " ", " ");
+		TableModelHorario k= new TableModelHorario(data);
+		tableGrade.setModel(k);
 	}
 
 	public String[] getColuumnName() {
@@ -182,7 +185,7 @@ public class Te extends JFrame {
 	public void resizeColumnWidth(JTable table) {
 		final TableColumnModel columnModel = table.getColumnModel();
 		for (int column = 0; column < table.getColumnCount(); column++) {
-			int width = 15; // Min width
+			int width = 15;
 			for (int row = 0; row < table.getRowCount(); row++) {
 				TableCellRenderer renderer = table.getCellRenderer(row, column);
 				Component comp = table.prepareRenderer(renderer, row, column);
