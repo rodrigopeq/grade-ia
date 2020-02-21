@@ -31,7 +31,6 @@ public class APIRequest {
 
 		
 		String response = api.getLastContent().toString();
-		System.out.println(response);//+++++++++++++++++++++++++++++++++
 		JSONObject obj = new JSONObject(response);
 		JSONArray data = obj.getJSONObject("data").getJSONArray("disciplinas");
 		for (var x : data) {

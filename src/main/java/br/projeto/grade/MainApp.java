@@ -65,7 +65,6 @@ public class MainApp
 		APIRequest api = new APIRequest(connect);
 
 		List<Disciplina> disciplinas = api.requestDisciplina();
-		System.err.println(disciplinas);
 		List<Docente> xDocentes = api.requestDocente();
 
 		List<Disciplina> alt = new ArrayList<>();
@@ -112,26 +111,34 @@ public class MainApp
 			solutionHorario = solverHorario.solve(cspHorario);
 			i++;
 		} while (Integer.parseInt(stepCounterHorario.getResults().get("assignmentCount")) > 1000 && i <= 1000);
+		
 //		solutionHorario.ifPresent(System.out::println);
-		System.out.println(stepCounterHorario.getResults() + "\n");
+//		System.out.println(stepCounterHorario.getResults() + "\n");
 
 		var solution = solutionHorario.get();
-//		System.err.println("========");
-//		System.out.println(solution);
-//		System.err.println("========");
 
 		for (Horario ho : solution.getVariables()) {
 			var di = solution.getValue(ho);
 			di.addHorario(ho);
-
-			System.err.println(ho);
-			System.err.println(di);
 		}
-
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.err.println("===== DISCIPLINAS =====\n");
 		for (Disciplina di : disciplinas) {
 			System.out.println(di);
 		}
-
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.err.print("\n\n==================== GRADE DE HORARIOS ====================\n");
+		DesenhaGrade x = new DesenhaGrade(disciplinas);
 	}
 
 }
