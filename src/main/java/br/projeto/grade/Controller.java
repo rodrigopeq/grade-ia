@@ -19,9 +19,7 @@ import br.projeto.models.Horario;
 import br.projeto.repositories.APIConnect;
 import br.projeto.repositories.APIRequest;
 
-public class MainApp
-
-{
+public class Controller {
 
 	// SEGUNDA
 	public static final Horario SEG1 = new Horario("2T1");
@@ -59,14 +57,16 @@ public class MainApp
 	public static final Horario SEX5 = new Horario("6T5");
 	public static final Horario SEX6 = new Horario("6T6");
 
-	public static void main(String[] args) {
+	APIConnect connect = new APIConnect();
+	APIRequest api = new APIRequest(connect);
 
-		APIConnect connect = new APIConnect();
-		APIRequest api = new APIRequest(connect);
+	private List<Disciplina> disciplinas;
+	private List<Docente> xDocentes;
+	
 
-		List<Disciplina> disciplinas = api.requestDisciplina();
-		List<Docente> xDocentes = api.requestDocente();
-
+	public Controller() {
+		disciplinas = api.requestDisciplina();
+		xDocentes = api.requestDocente();
 		List<Disciplina> alt = new ArrayList<>();
 		for (Docente k : xDocentes) {
 			alt = new ArrayList<>();
@@ -75,7 +75,9 @@ public class MainApp
 			}
 			k.setPreferencias(alt);
 		}
-		
+	}
+
+	private void algoritmo_disc_prof() {
 		Domain<Docente> docentes = new Domain<>(xDocentes);
 		CSP<Disciplina, Docente> cspDisciplina = new DisciplinaCSP(disciplinas, docentes);
 		CspListener.StepCounter<Disciplina, Docente> stepCounterDisciplina = new CspListener.StepCounter<>();
@@ -86,15 +88,14 @@ public class MainApp
 		solverDisciplina.addCspListener(stepCounterDisciplina);
 		stepCounterDisciplina.reset();
 		solutionDisciplina = solverDisciplina.solve(cspDisciplina);
-//		solutionDisciplina.ifPresent(System.out::println);
-//		System.out.println(stepCounterDisciplina.getResults() + "\n");
 
 		for (Disciplina di : disciplinas) {
 			di.setDocente(solutionDisciplina.get().getValue(di));
 		}
 
-		// ===============================================================================
+	}
 
+	private void algoritmo_hor_disc() {
 		Domain<Disciplina> horarios = new Domain<>(disciplinas);
 		List<Horario> variaveisHorario = Arrays.asList(SEG1, SEG2, SEG3, SEG4, SEG5, SEG6, TER1, TER2, TER3, TER4, TER5,
 				TER6, QUA1, QUA2, QUA3, QUA4, QUA5, QUA6, QUI1, QUI2, QUI3, QUI4, QUI5, QUI6, SEX1, SEX2, SEX3, SEX4,
@@ -112,34 +113,37 @@ public class MainApp
 			solutionHorario = solverHorario.solve(cspHorario);
 			i++;
 		} while (Integer.parseInt(stepCounterHorario.getResults().get("assignmentCount")) > 1000 && i <= 1000);
-		
-//		solutionHorario.ifPresent(System.out::println);
-//		System.out.println(stepCounterHorario.getResults() + "\n");
-
 		var solution = solutionHorario.get();
 
 		for (Horario ho : solution.getVariables()) {
 			var di = solution.getValue(ho);
 			di.addHorario(ho);
 		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.err.println("===== DISCIPLINAS =====\n");
-		for (Disciplina di : disciplinas) {
-			System.out.println(di);
-		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.err.print("\n\n==================== GRADE DE HORARIOS ====================\n");
-		DesenhaGrade x = new DesenhaGrade(disciplinas);
 	}
+	
+	public void resultProblem() throws Exception {
+		try {
+			algoritmo_disc_prof();
+			algoritmo_hor_disc();
+			
+		}catch(Exception ex) {
+			throw new Exception();
+		}
+	}
+	
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
+	public List<Docente> getxDocentes() {
+		return xDocentes;
+	}
+	public void setxDocentes(List<Docente> xDocentes) {
+		this.xDocentes = xDocentes;
+	}
+	
+	
 
 }

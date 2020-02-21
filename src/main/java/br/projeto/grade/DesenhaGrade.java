@@ -51,102 +51,105 @@ public class DesenhaGrade {
 	public DesenhaGrade(List<Disciplina> disciplinas) {
 		for (Disciplina di : disciplinas) {
 			for (Horario ho : di.getHorario()) {
+				var docenteName = di.getDocente().getNome();
+				var complement = " - " + docenteName.substring(0, docenteName.indexOf(" "));
 				switch (ho.getName()) {
 				case "2T1":
-					SEG1 = di.getName();
+					SEG1 = di.getName() + complement ;
 					break;
 				case "2T2":
-					SEG2 = di.getName();
+					SEG2 = di.getName()+ complement ;
 					break;
 				case "2T3":
-					SEG3 = di.getName();
+					SEG3 = di.getName()+ complement ;
 					break;
 				case "2T4":
-					SEG4 = di.getName();
+					SEG4 = di.getName()+ complement ;
 					break;
 				case "2T5":
-					SEG5 = di.getName();
+					SEG5 = di.getName()+ complement ;
 					break;
 				case "2T6":
-					SEG6 = di.getName();
+					SEG6 = di.getName()+ complement ;
 					break;
 				case "3T1":
-					TER1 = di.getName();
+					TER1 = di.getName()+ complement ;
 					break;
 				case "3T2":
-					TER2 = di.getName();
+					TER2 = di.getName()+ complement ;
 					break;
 				case "3T3":
-					TER3 = di.getName();
+					TER3 = di.getName()+ complement ;
 					break;
 				case "3T4":
-					TER4 = di.getName();
+					TER4 = di.getName()+ complement ;
 					break;
 				case "3T5":
-					TER5 = di.getName();
+					TER5 = di.getName()+ complement ;
 					break;
 				case "3T6":
-					TER6 = di.getName();
+					TER6 = di.getName()+ complement ;
 					break;
 				case "4T1":
-					QUA1 = di.getName();
+					QUA1 = di.getName()+ complement ;
 					break;
 				case "4T2":
-					QUA2 = di.getName();
+					QUA2 = di.getName()+ complement ;
 					break;
 				case "4T3":
-					QUA3 = di.getName();
+					QUA3 = di.getName()+ complement ;
 					break;
 				case "4T4":
-					QUA4 = di.getName();
+					QUA4 = di.getName()+ complement ;
 					break;
 				case "4T5":
-					QUA5 = di.getName();
+					QUA5 = di.getName()+ complement ;
 					break;
 				case "4T6":
-					QUA6 = di.getName();
+					QUA6 = di.getName()+ complement ;
 					break;
 				case "5T1":
-					QUI1 = di.getName();
+					QUI1 = di.getName()+ complement ;
 					break;
 				case "5T2":
-					QUI2 = di.getName();
+					QUI2 = di.getName()+ complement ;
 					break;
 				case "5T3":
-					QUI3 = di.getName();
+					QUI3 = di.getName()+ complement ;
 					break;
 				case "5T4":
-					QUI4 = di.getName();
+					QUI4 = di.getName()+ complement ;
 					break;
 				case "5T5":
-					QUI5 = di.getName();
+					QUI5 = di.getName()+ complement ;
 					break;
 				case "5T6":
-					QUI6 = di.getName();
+					QUI6 = di.getName()+ complement ;
 					break;
 				case "6T1":
-					SEX1 = di.getName();
+					SEX1 = di.getName()+ complement ;
 					break;
 				case "6T2":
-					SEX2 = di.getName();
+					SEX2 = di.getName()+ complement ;
 					break;
 				case "6T3":
-					SEX3 = di.getName();
+					SEX3 = di.getName()+ complement ;
 					break;
 				case "6T4":
-					SEX4 = di.getName();
+					SEX4 = di.getName()+ complement ;
 					break;
 				case "6T5":
-					SEX5 = di.getName();
+					SEX5 = di.getName()+ complement ;
 					break;
 				case "6T6":
-					SEX6 = di.getName();
+					SEX6 = di.getName()+ complement ;
 					break;
 				default:
 					System.err.println("Default");
 				}
 			}
 		}
+		
 		List<String> ordem = Arrays.asList(SEG1, SEG2, SEG3, SEG4, SEG5, SEG6, TER1, TER2, TER3, TER4, TER5, TER6, QUA1,
 				QUA2, QUA3, QUA4, QUA5, QUA6, QUI1, QUI2, QUI3, QUI4, QUI5, QUI6, SEX1, SEX2, SEX3, SEX4, SEX5, SEX6);
 		
@@ -182,6 +185,6 @@ public class DesenhaGrade {
 		result.append(SEX6);result.append("\n");
 		
 		System.out.println(result);
-
+		
 	}
 }
