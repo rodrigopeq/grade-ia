@@ -24,6 +24,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/rodrigopeq/Documentos/json-20190722.jar"/>
+	<classpathentry kind="lib" path="/home/rodrigopeq/eclipse-workspace/grade/lib/json-20190722.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
