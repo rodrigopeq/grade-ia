@@ -6,7 +6,7 @@ import java.util.List;
 public class Docente {
 
 	private String nome;
-	List<Disciplina> preferencias = new ArrayList<>();
+	public List<Disciplina> preferencias = new ArrayList<>();
 
 	public void addPreferencias(Disciplina preferencia) {
 		if (preferencias.size() < 3) {
@@ -18,7 +18,7 @@ public class Docente {
 		return preferencias;
 	}
 
-	public void setPreferencias(ArrayList<Disciplina> preferencias) {
+	public void setPreferencias(List<Disciplina> preferencias) {
 		if (preferencias.size() < 3) {
 			this.preferencias = preferencias;
 		}

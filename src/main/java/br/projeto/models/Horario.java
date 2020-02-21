@@ -18,12 +18,5 @@ public class Horario extends Variable {
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder result = new StringBuilder();
-		result.append(this.getName());
-		return result.toString();
-	}
 
 }

@@ -7,17 +7,17 @@ import aima.core.search.csp.Variable;
 
 public class Disciplina extends Variable {
 
-	public Disciplina(String codigo, String name, int carga) {
+	public Disciplina(String codigo, String name, int carga, List<Horario> horario) {
 		super(name);
 		this.codigo = codigo;
 		this.cargaHoraria = carga;
-		this.horario = new ArrayList<>();
+		this.horario = horario;
 	}
 
 	private String codigo;
 	private Docente docente;
 	private int cargaHoraria;
-	private List<Horario> horario;
+	private List<Horario> horario = new ArrayList<>();
 
 	public Docente getDocente() {
 		return docente;
@@ -49,12 +49,14 @@ public class Disciplina extends Variable {
 		StringBuilder result = new StringBuilder();
 		result.append("(");
 		result.append(this.getName());
-		if(docente!= null) {
-			result.append("==Docente:");
-			result.append(docente.toString());
-		}
-		result.append("==Horario");
+//		if(docente!= null) {
+//			result.append("==Docente:");
+//			result.append(docente.toString());
+//		}
+		result.append("==Horario:");
 		result.append(this.horario);
+		result.append("==Carga:");
+		result.append(this.cargaHoraria);
 		result.append(")");	
 		return result.toString();
 	}

@@ -42,8 +42,6 @@ public class WorkloadConstraint<VAR extends Variable, VAL> implements Constraint
 				return true;
 		}
 		return false;
-		
-		
-//		return value1 == null || value1.equals(assignment.getValue(var2));
+
 	}
 }

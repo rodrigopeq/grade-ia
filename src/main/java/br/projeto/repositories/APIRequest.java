@@ -1,14 +1,10 @@
 package br.projeto.repositories;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import br.projeto.models.Disciplina;
 import br.projeto.models.Docente;
@@ -29,19 +25,28 @@ public class APIRequest {
 	}
 
 	public List<Disciplina> requestDisciplina() {
-		String urlParameters = "{\"query\":\"{ disciplinas { codigo name carga_horaria } }\"}";
+		List<Disciplina> result = new ArrayList<>();
+		String urlParameters = "{\"query\":\"{ disciplinas(order_by: {codigo: asc}) { codigo name carga_horaria } }\"}";
 		api.request(urlParameters);
 
-		String response = responseFormated(api.getLastContent().toString());
-		System.out.println(response);
-		Type listType = new TypeToken<ArrayList<Disciplina>>() {
-		}.getType();
-		return new Gson().fromJson(response, listType);
+		
+		String response = api.getLastContent().toString();
+		System.out.println(response);//+++++++++++++++++++++++++++++++++
+		JSONObject obj = new JSONObject(response);
+		JSONArray data = obj.getJSONObject("data").getJSONArray("disciplinas");
+		for (var x : data) {
+			JSONObject disciplina = (JSONObject) x;
+			String cod = disciplina.getString("codigo");
+			String name = disciplina.getString("name");
+			int ch = disciplina.getInt("carga_horaria");
+			result.add(new Disciplina(cod, name, ch, new ArrayList<>()));
+			}
+		return result;
 	}
 
 	public List<Docente> requestDocente() {
 		List<Docente> result = new ArrayList<>();
-		String urlParameters = "{\"query\":\"{ docentes { nome preferencia { disciplina { name codigo carga_horaria } } } }\"}";
+		String urlParameters = "{\"query\":\"{ docentes(order_by: {nome: asc}) { nome preferencia { disciplina { name codigo carga_horaria } } } }\"}";
 		api.request(urlParameters);
 		String response = api.getLastContent().toString();
 		JSONObject obj = new JSONObject(response);
@@ -57,7 +62,7 @@ public class APIRequest {
 				String cod = disciplina.getString("codigo");
 				String name = disciplina.getString("name");
 				int ch = disciplina.getInt("carga_horaria");
-				novo.addPreferencias(new Disciplina(cod, name, ch));
+				novo.addPreferencias(new Disciplina(cod, name, ch, new ArrayList<>()));
 			}
 			result.add(novo);
 		}

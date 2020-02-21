@@ -1,5 +1,6 @@
 package br.projeto.grade;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,13 +21,19 @@ public class App
 
 {
 
-	public static final Disciplina COMP0397 = new Disciplina("COMP0397", "PROGRAMAÇÃO PARALELA E CONCORRENTE", 60);
-	public static final Disciplina COMP0427 = new Disciplina("COMP0427", "INTELIGÊNCIA ARTIFICIAL", 60);
-	public static final Disciplina COMP0439 = new Disciplina("COMP0439", "ENGENHARIA DE SOFTWARE II", 60);
-	public static final Disciplina COMP0455 = new Disciplina("COMP0455", "BANCO DE DADOS I", 60);
-	public static final Disciplina COMP0463 = new Disciplina("COMP0463", "LABORATÓRIO DE REDES DE COMPUTADORES", 30);
-	public static final Disciplina COMP0470 = new Disciplina("COMP0470", "SISTEMAS DISTRIBUÍDOS", 60);
-	public static final Disciplina ELET0111 = new Disciplina("ELET0111", "ELETRÔNICA I", 90);
+	public static final Disciplina COMP0397 = new Disciplina("COMP0397", "PROGRAMAÇÃO PARALELA E CONCORRENTE", 60,
+			new ArrayList<>());
+	public static final Disciplina COMP0427 = new Disciplina("COMP0427", "INTELIGÊNCIA ARTIFICIAL", 60,
+			new ArrayList<>());
+	public static final Disciplina COMP0439 = new Disciplina("COMP0439", "ENGENHARIA DE SOFTWARE II", 60,
+			new ArrayList<>());
+	public static final Disciplina COMP0455 = new Disciplina("COMP0455", "BANCO DE DADOS I", 60, new ArrayList<>());
+	public static final Disciplina COMP0463 = new Disciplina("COMP0463", "LABORATÓRIO DE REDES DE COMPUTADORES", 30,
+			new ArrayList<>());
+	public static final Disciplina COMP0470 = new Disciplina("COMP0470", "SISTEMAS DISTRIBUÍDOS", 60,
+			new ArrayList<>());
+	public static final Disciplina ELET0111 = new Disciplina("ELET0111", "ELETRÔNICA I", 90, new ArrayList<>());
+	public static final Disciplina AAAA0000 = new Disciplina("", "XXXXXXXXXXXXXXXXXXXXXXXXX", 30, new ArrayList<>());
 
 	// SEGUNDA
 	public static final Horario SEG1 = new Horario("2T1");
