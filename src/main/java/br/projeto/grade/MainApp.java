@@ -78,7 +78,7 @@ public class MainApp
 		stepCounterDisciplina.reset();
 		solutionDisciplina = solverDisciplina.solve(cspDisciplina);
 //		solutionDisciplina.ifPresent(System.out::println);
-//		System.out.println(stepCounterDisciplina.getResults() + "\n");
+		System.out.println(stepCounterDisciplina.getResults() + "\n");
 
 		for (Disciplina di : disciplinas) {
 			di.setDocente(solutionDisciplina.get().getValue(di));

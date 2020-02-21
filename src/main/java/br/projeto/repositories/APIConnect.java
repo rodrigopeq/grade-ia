@@ -2,6 +2,7 @@ package br.projeto.repositories;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,7 +14,8 @@ public class APIConnect {
 	private StringBuilder lastContent;
 	private byte[] postData;
 
-	public APIConnect() {
+
+	public void request(String urlParameters) {
 		Manipulator mn = new Manipulator();
 		try {
 			var myurl = new URL(mn.getUrl());
@@ -28,12 +30,16 @@ public class APIConnect {
 			ex.printStackTrace();
 			con.disconnect();
 		}
-	}
-
-	public void request(String urlParameters) {
+		try {
+			con.connect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setPostData(urlParameters);
 		try (var wr = new DataOutputStream(con.getOutputStream())) {
 			wr.write(postData);
+			wr.close();
 		} catch (Exception ex) {
 			System.out.println("Erro nos dados - Message: " + ex.getMessage());
 			ex.printStackTrace();
@@ -48,6 +54,7 @@ public class APIConnect {
 				lastContent.append(line);
 				lastContent.append(System.lineSeparator());
 			}
+			br.close();
 		} catch (Exception ex) {
 			System.out.println("Erro na resposta - Message: " + ex.getMessage());
 			ex.printStackTrace();
